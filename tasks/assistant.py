@@ -28,9 +28,10 @@ def change_contact(args, contacts):
 
 def show_phone(args, contacts):
     try:
-        name = args[0]
-    except ValueError:
+        assert len(args)==1
+    except AssertionError:
         return "Please provide 1 argument to the command: [show], e.g. 'show Liza'"
+    name = args[0]
     if not contacts.get(name):
         return f"No contact found."
     else:
@@ -45,7 +46,10 @@ def main():
     print("Welcome to the assistant bot!")
     while True:
         user_input = input("Enter a command: ")
-        command, *args = parse_input(user_input)
+        try:
+            command, *args = parse_input(user_input)
+        except ValueError:
+            continue
 
         if command in ["close", "exit"]:
             print("Good bye!")
@@ -56,7 +60,7 @@ def main():
             print(add_contact(args, contacts))
         elif command == "change":
             print(change_contact(args, contacts))
-        elif command == "show":
+        elif command == "phone":
             print(show_phone(args, contacts))
         elif command == "all":
             print(show_all(contacts))

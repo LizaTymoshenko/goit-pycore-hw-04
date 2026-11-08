@@ -15,14 +15,18 @@ def get_dir_structure(path: Path):
 
 
     # walk the directory
-    def discover_dir(path: Path, level: int):
+    def discover_dir(path: Path, level: int) -> None:
+        def get_indent(level: int) -> str:
+            return level * '   '
+        indent = get_indent(level)
         # print folder name 
-        indent = level * '   '
         print(indent + Fore.BLUE + path.name + '/')
         children = sorted([c for c in path.iterdir()])
+        # all chilndren printed on next level
+        level += 1
+        indent = get_indent(level)
         for p in children:
             if p.is_dir():
-                level += 1
                 discover_dir(p, level)
             else:
                 print(indent + Fore.GREEN + p.name)
