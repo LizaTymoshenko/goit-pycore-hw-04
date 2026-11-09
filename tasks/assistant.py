@@ -30,7 +30,7 @@ def show_phone(args, contacts):
     try:
         assert len(args)==1
     except AssertionError:
-        return "Please provide 1 argument to the command: [show], e.g. 'show Liza'"
+        return "Please provide 1 argument to the command: [show], e.g. 'phone Liza'"
     name = args[0]
     if not contacts.get(name):
         return f"No contact found."
@@ -49,6 +49,7 @@ def main():
         try:
             command, *args = parse_input(user_input)
         except ValueError:
+            print('Please enter a command. Available commands: add / change / phone / all / close / exit.')
             continue
 
         if command in ["close", "exit"]:
